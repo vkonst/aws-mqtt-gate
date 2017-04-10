@@ -1,0 +1,7 @@
+{
+  "lambda": {
+    "role": "lambda-to-ios-executor",
+    "name": "lambda-to-ios",
+    "region": "eu-central-1"
+  }
+}
