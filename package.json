@@ -2,7 +2,7 @@
   "name": "lambda-to-ios",
   "version": "1.0.0",
   "description": "",
-  "main": "lambda-to-ios.js",
+  "main": "lambda-to-iot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,7 @@
     "crypto": "0.0.3"
   },
   "files": [
-    "lambda-to-ios.js",
+    "lambda-to-iot.js",
     "config.js",
     "modules/identity.js",
     "certs/publisher.pem.cert",
