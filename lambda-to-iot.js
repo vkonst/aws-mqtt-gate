@@ -13,8 +13,8 @@ exports.handler = (event, context, callback) => {
         .then(prepareMsg)
         .then(publishMsg)
         .then(
-            () =>  { logCleanReply(null, [event, context]) },
-            err => { logCleanReply(err,  [event, context]) }
+            () =>  { logCleanCallBack(null, [event, context]) },
+            err => { logCleanCallBack(err,  [event, context]) }
         );
 };
 
@@ -52,18 +52,24 @@ function publishMsg([event, ctx]) {
         .then(() => { return [event, ctx]; });
 }
 
-function logCleanReply(err, [event, ctx]) {
-    let msg = ctx.$$custom.res ? ctx.$$custom.res : {"result":"Ok"};
-    let res = {
-        statusCode: err ? '400' : '200',
-        body: err ? err.message : JSON.stringify(msg),
-        headers: {'Content-Type': (err ? 'application/json' : 'text/plain')}
-    };
-    log();
-    delete ctx.$$custom;
-    cb(null, res);
+function logCleanCallBack(err, [event, ctx]) {
+    let cb = ctx.$$custome.callback;
+    let res = castResponse();
 
-    function log() {
+    log(err, event, ctx, res);
+    clean(ctx);
+
+    return cb(null, res);
+
+    function castResponse() {
+        let msg = ctx.$$custom.res ? ctx.$$custom.res : {"result":"Ok"};
+        return {
+            statusCode: err ? '400' : '200',
+            body: err ? err.message : JSON.stringify(msg),
+            headers: {'Content-Type': (err ? 'application/json' : 'text/plain')}
+        };
+    }
+    function log(err, event, ctx, res) {
         if (err)
             console.log(err);
         if ( process.env.debug >= 1) {
@@ -73,4 +79,5 @@ function logCleanReply(err, [event, ctx]) {
         if ( process.env.debug >= 2)
             console.log("Context: ", JSON.stringify(ctx));
     }
+    function clean(ctx) { delete ctx.$$custom;}
 }
