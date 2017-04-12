@@ -83,14 +83,14 @@ describe('identity.js', () => {
             assert.equal(identity.verify(createEvent({ipAddress: "10.0.0.5"})), false);
         });
 
-        it('shall return true for user&passw in event.queryStringParameters matching getConfig.authorized.users', function() {
+        it('shall return true for user&passw in event.queryStringParameters matching getConfig.authRules.users', function() {
             let user1 = { name: 'door-sensor', passw: 'tervetuloa' };
             let user2 = { name: 'oracle', passw: 'letitbe' };
             assert.equal(identity.verify(createEvent({user: user1})), true);
             assert.equal(identity.verify(createEvent({user: user2})), true);
         });
 
-        it('shall return false for user&passw in event.queryStringParameters unmatching getConfig.authorized.users', function() {
+        it('shall return false for user&passw in event.queryStringParameters unmatching getConfig.authRules.users', function() {
             let user = { name: 'door-sensor', passw: 'letitbe' };
             assert.equal(identity.verify(createEvent({user: user})), false);
         });
@@ -100,7 +100,7 @@ describe('identity.js', () => {
             assert.equal(identity.verify(createEvent({user: user})), false);
         });
 
-        it('shall return true if event.queryStringParameters.hmac set to HMAC-RSA1 for event.body and getConfig.authorized.hmacKey', function() {
+        it('shall return true if event.queryStringParameters.hmac set to HMAC-RSA1 for event.body and getConfig.authRules.hmacKey', function() {
             let event = createEvent({body: '{"message":"some message"}', hmac:'a5f4e0731dce386967d8033ab71fbd9b899b2966'});
             assert.equal(identity.verify(event), true);
         });
@@ -110,7 +110,7 @@ describe('identity.js', () => {
             assert.equal(identity.verify(event), false);
         });
 
-        it('shall return true if event.body begins with HMAC-RSA1 for rest of event.body and getConfig.authorized.hmacKey', function() {
+        it('shall return true if event.body begins with HMAC-RSA1 for rest of event.body and getConfig.authRules.hmacKey', function() {
             let event = createEvent({body: 'a5f4e0731dce386967d8033ab71fbd9b899b2966{"message":"some message"}'});
             assert.equal(identity.verify(event), true);
         });
@@ -143,8 +143,8 @@ describe('identity.js', () => {
         }
 
         if (params.body) {
-            let str = (typeof params.body === 'object') ? JSON.stringify(params.body) : params.body;
-            event.body = str;
+            event.body = (typeof params.body === 'object') ?
+                JSON.stringify(params.body) : params.body;
         }
 
         if (params.hmac) {

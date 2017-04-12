@@ -2,6 +2,9 @@
 module.exports = function configure(getConfig) {
     "use strict";
 
+    let config;
+    if (config) return Promise.resolve(config);
+
     const extend = require('util')._extend;
     const decryptor = require('./kmsDecryptor');
 
@@ -10,13 +13,15 @@ module.exports = function configure(getConfig) {
         Promise.resolve({});
 
     return asyncDecrypt
-        .then( (decrypted) => {
-            if (typeof getConfig === 'function')
-                return getConfig(decrypted);
-            else
-                return extend(
+        .then( decrypted => {
+            if (typeof getConfig === 'function') {
+                config = getConfig(decrypted);
+            } else {
+                config = extend(
                     getConfig ? getConfig : {},
                     decrypted
                 );
+            }
+            return config;
         });
 };

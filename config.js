@@ -19,7 +19,7 @@ module.exports = function(decrypted) {
             delay: 1000,                // in millis before publishing
             debug: false
         },
-        authorized: {                   // set to Boolean(true) to disable identity verification
+        authRules: {                    // set to Boolean(true) to disable identity verification
             hmacKey: decrypted['hmacKey'],
             ipPools: ( (privatePool) => {
                 let pools = [
