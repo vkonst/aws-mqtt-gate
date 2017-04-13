@@ -21,9 +21,9 @@ module.exports = function(params) {
             delay: 1000,                // in millis before publishing
             debug: false
         },
-        authRules: true
         /* disabling sender verification:
-         authRules: true,
+        authRules: true,
+        */
         authRules: {
             hmacKey: params['hmacKey'],
             ipPools: ( (privatePool) => {
@@ -35,6 +35,5 @@ module.exports = function(params) {
             } )(params['privateIpPool']),
             users: undefined            // {"name":"passw"}
         }
-        */
     };
 };
