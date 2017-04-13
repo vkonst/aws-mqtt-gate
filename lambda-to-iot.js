@@ -1,4 +1,4 @@
-/* global exports, require */
+/* global exports, require, process */
 'use strict';
 
 const Identity = require('./modules/identity');
@@ -19,7 +19,11 @@ exports.handler = (event, context, callback) => {
 };
 
 function customize(event, ctx, cb) {
-    ctx.$$custom = {callback: cb};
+    ctx.$$custom = {
+        callback: cb,
+        config: undefined,
+        response: undefined
+    };
     return Promise.resolve([event, ctx])
 }
 
@@ -44,7 +48,7 @@ function prepareMsg([event, ctx]) {
 
 function publishMsg([event, ctx]) {
     let device = ctx.$$custom.config.device;
-    let topic = ctx.$$custom.topic;
+    let topic = ctx.$$custom.config.topic;
     let msg = ctx.$$custom.msg;
 
     return (new Publisher(device))
@@ -53,16 +57,16 @@ function publishMsg([event, ctx]) {
 }
 
 function logCleanCallBack(err, [event, ctx]) {
-    let cb = ctx.$$custome.callback;
-    let res = castResponse();
+    let cb = ctx.$$custom.callback;
+    let res = castResponse(err, ctx);
 
     log(err, event, ctx, res);
     clean(ctx);
 
     return cb(null, res);
 
-    function castResponse() {
-        let msg = ctx.$$custom.res ? ctx.$$custom.res : {"result":"Ok"};
+    function castResponse(err, ctx) {
+        let msg = ctx.$$custom.response ? ctx.$$custom.response : {"result":"Ok"};
         return {
             statusCode: err ? '400' : '200',
             body: err ? err.message : JSON.stringify(msg),

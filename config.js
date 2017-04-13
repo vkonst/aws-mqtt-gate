@@ -7,19 +7,26 @@ module.exports = function(decrypted) {
         topic: env.topic ? env.topic : 'fromAwsLambda',
         device: {
             host: decrypted['mqttServer'],
-            //keyPath: 'certs/publisher.private.key',
             privateKey: decrypted['privateKey'],
+            /*
+             // alternative to privateKey:
+             keyPath: 'certs/publisher.private.key',
+            */
             certPath: 'certs/publisher.pem.cert',
             caPath:   'certs/root-CA.crt',
             clientId: 'lambda-iot-publisher',
-            region: env.region ? env.region : 'eu-central-1',
+            region: 'eu-central-1',
             keepalive: 30,
             protocol: 'mqtts',
             port: 8883,
             delay: 1000,                // in millis before publishing
             debug: false
         },
-        authRules: {                    // set to Boolean(true) to disable identity verification
+        /*
+         // disabling sender verification:
+         authRules: true,
+        */
+        authRules: {
             hmacKey: decrypted['hmacKey'],
             ipPools: ( (privatePool) => {
                 let pools = [

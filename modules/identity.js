@@ -7,12 +7,12 @@ module.exports = (function() {
 
     return Identity;
 
-    function Identity(authorizedItems) {
-        if (!(this instanceof Identity)) return new Identity(authorizedItems);
+    function Identity(authRules) {
+        if (!(this instanceof Identity)) return new Identity(authRules);
         let identity = this;
 
         const verificationDisabled = true;
-        if (authorizedItems === verificationDisabled) {
+        if (authRules === verificationDisabled) {
             identity.verify = () => {return true};
         } else {
             identity.verify = verifyIdentity;
@@ -20,7 +20,7 @@ module.exports = (function() {
             identity.verifyByPassw = verifyByPassw;
             identity.verifyByIp = verifyByIp;
 
-            identity.conf = authorizedItems;
+            identity.conf = authRules;
             processConf(identity.conf);
         }
         return identity;
