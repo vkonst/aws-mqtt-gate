@@ -1,22 +1,24 @@
 {
-  "name": "lambda-to-ios",
+  "name": "lambda-to-iot",
   "version": "1.0.0",
-  "description": "",
+  "description": "HTTP(s) to MQTT getway powered by AWS Lambda",
   "main": "lambda-to-iot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "vadim.konstantinov@gmail.com",
   "license": "ISC",
   "optionalDependencies": {
     "aws-iot-device-sdk": "^1.0.14",
-    "aws-sdk": "^2.28.0",
-    "crypto": "0.0.3"
+    "aws-sdk": "^2.28.0"
   },
   "files": [
     "lambda-to-iot.js",
     "config.js",
+    "modules/decryptConfig.js",
     "modules/identity.js",
+    "modules/kmsDecryptor.js",
+    "modules/mqttPublisher.js",
     "certs/publisher.pem.cert",
     "certs/root-CA.crt"
   ],
@@ -24,6 +26,7 @@
     "ip": "^1.1.5"
   },
   "devDependencies": {
-    "sinon": "^2.1.0"
+    "sinon": "^2.1.0",
+    "crypto": "0.0.3"
   }
 }

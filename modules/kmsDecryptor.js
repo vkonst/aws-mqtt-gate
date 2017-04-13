@@ -14,7 +14,10 @@ module.exports = (function() {
             kms.decrypt(
                 { CiphertextBlob: new Buffer(encyptedData, 'base64') },
                 (err, data) => {
-                    return (err) ? reject(err) : resolve(data);
+                    if (err)
+                        return reject(err);
+                    else
+                        return resolve(data.Plaintext.toString('ascii'));
                 }
             )
         }).then(parseJson);

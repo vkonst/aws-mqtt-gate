@@ -40,10 +40,12 @@ function verifySender([event, ctx]) {
     const identity = new Identity(authRules);
     if (!identity.verify(event))
         return Promise.reject({message: 'Unauthorized'});
+    return [event, ctx];
 }
 
 function prepareMsg([event, ctx]) {
     ctx.$$custom.msg = event.body;
+    return [event, ctx];
 }
 
 function publishMsg([event, ctx]) {

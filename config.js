@@ -1,15 +1,14 @@
 /* global module, require, process */
-module.exports = function(decrypted) {
+module.exports = function(params) {
     "use strict";
     let env = process.env;
 
     return {
         topic: env.topic ? env.topic : 'fromAwsLambda',
         device: {
-            host: decrypted['mqttServer'],
-            privateKey: decrypted['privateKey'],
-            /*
-             // alternative to privateKey:
+            host: params['mqttServer'],
+            privateKey: new Buffer(params['privateKey'], "binary"),
+            /* alternative:
              keyPath: 'certs/publisher.private.key',
             */
             certPath: 'certs/publisher.pem.cert',
@@ -22,20 +21,20 @@ module.exports = function(decrypted) {
             delay: 1000,                // in millis before publishing
             debug: false
         },
-        /*
-         // disabling sender verification:
+        authRules: true
+        /* disabling sender verification:
          authRules: true,
-        */
         authRules: {
-            hmacKey: decrypted['hmacKey'],
+            hmacKey: params['hmacKey'],
             ipPools: ( (privatePool) => {
                 let pools = [
                     "149.154.164.0/22"  // Telegram Messenger Amsterdam Network
                 ];
                 if (privatePool) pools.push(privatePool);
                 return pools;
-            } )(decrypted['privateIpPool']),
+            } )(params['privateIpPool']),
             users: undefined            // {"name":"passw"}
         }
+        */
     };
 };
