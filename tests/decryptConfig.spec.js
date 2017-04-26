@@ -4,14 +4,14 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-describe('decryptConfig.js', () => {
+describe('configure.js', () => {
     let kmsDecryptor;
     let underTest, decryptConfig, encryptedData, decryptedData;
 
     before( () => {
         kmsDecryptor = requireUncached('../modules/kmsDecryptor');
         sinon.stub(kmsDecryptor, 'decrypt').callsFake(fakeDecrypt);
-        underTest = require('../modules/decryptConfig');
+        underTest = require('../modules/configure');
         decryptConfig = underTest;
     });
     after( () => {kmsDecryptor.decrypt.restore()} );
@@ -110,7 +110,7 @@ describe('decryptConfig.js', () => {
     }
 
     function requireUncached(module){
-        delete require.cache[require.resolve(module)]
+        delete require.cache[require.resolve(module)];
         return require(module)
     }
 

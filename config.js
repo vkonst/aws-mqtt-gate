@@ -32,7 +32,7 @@ module.exports = function(params) {
                 ];
                 if (privatePool) pools.push(privatePool);
                 return pools;
-            } )(params['privateIpPool']),
+            } )(params['privatePool']),
             users: undefined            // {"name":"passw"}
         }
     };

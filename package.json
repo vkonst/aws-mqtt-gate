@@ -15,7 +15,7 @@
   "files": [
     "lambda-to-iot.js",
     "config.js",
-    "modules/decryptConfig.js",
+    "modules/configure.js",
     "modules/identity.js",
     "modules/kmsDecryptor.js",
     "modules/mqttPublisher.js",
