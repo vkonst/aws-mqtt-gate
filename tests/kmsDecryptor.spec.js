@@ -14,7 +14,8 @@ describe('kmsDecryptor.js', ()=>{
         underTest = requireUncached('../modules/kmsDecryptor');
         decryptor = underTest;
     });
-    after( () => {AWS.KMS.restore()} );
+    after( () => {
+        AWS.KMS.restore()} );
 
     beforeEach(() => {
         encryptedData = "someWirdSequenceOfCharsInBase64Encoding=";
@@ -41,7 +42,7 @@ describe('kmsDecryptor.js', ()=>{
             assert.equal(promise instanceof Promise, true);
         });
 
-        it('shall return a promise resolving to "parsedData" object for this test)', function(done) {
+        it('shall return a promise resolving to "parsedData" object for this test', function(done) {
             decryptor.decrypt(encryptedData)
                 .then( (data) => {
                     assert.deepEqual(data, parsedData);
@@ -80,7 +81,7 @@ describe('kmsDecryptor.js', ()=>{
     }
 
     function requireUncached(module){
-        delete require.cache[require.resolve(module)]
+        delete require.cache[require.resolve(module)];
         return require(module)
     }
 });

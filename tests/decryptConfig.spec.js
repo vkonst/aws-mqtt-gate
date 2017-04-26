@@ -4,7 +4,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-describe('configure.js', () => {
+xdescribe('configure.js', () => {
     let kmsDecryptor;
     let underTest, decryptConfig, encryptedData, decryptedData;
 

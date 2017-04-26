@@ -2,27 +2,38 @@
 module.exports = (function() {
     "use strict";
 
-    return {
-        customizeAndPromisify: customizeAndPromisify,
-        uncustomAndCallback: uncustomAndCallback
-    };
+    MyContext.prototype.promisify = returnSelfAsResolvedPromise;
+    return MyContext;
 
-    function customizeAndPromisify(event, ctx, cb) {
-        ctx.$$custom = {
-            config: undefined,
-            res: {}
-        };
-        return Promise.resolve([event, ctx]);
+    function MyContext(event, ctx, cb) {
+        let myCtx = this;
+        myCtx.event = event;
+        myCtx.ctx = ctx;
+        myCtx.cb = cb;
+        myCtx.config = undefined;
+        myCtx.res = {};
+
+        myCtx.finalize = function() { logAndCallCb.apply(myCtx, arguments) };
+
+        return myCtx;
     }
 
-    function uncustomAndCallback(err, [event, ctx, cb]) {
-        let res = castResponse(err, ctx);
-        log(err, event, ctx, res);
-        clean(ctx);
-        return cb(null, res);
+    function returnSelfAsResolvedPromise() {
+        let self = this instanceof MyContext ? this : new MyContext(arguments);
+        return Promise.resolve(self);
+    }
 
-        function castResponse(err, ctx) {
-            let res = ctx.$$custom.res, contentType;
+    function logAndCallCb(ctxOrErr) {
+        let myCtx = this;
+        let isError = ctxOrErr && (ctxOrErr !== myCtx);
+        let err = isError ? ctxOrErr : undefined;
+
+        let res = castResponse(err, myCtx);
+        log(err, myCtx);
+        return myCtx.cb(null, res);
+
+        function castResponse(err, myCtx) {
+            let res = myCtx.res, contentType;
 
             if (err) {
                 res.body = err.message;
@@ -39,19 +50,18 @@ module.exports = (function() {
 
             return res;
         }
-        function log(err, event, ctx, res) {
+        function log(err, myCtx) {
             if (err)
-                console.log(err);
+                console.log("Error: ", err);
             if ( process.env.debug >= 1 ) {
-                console.log("Event: ", JSON.stringify(event));
-                console.log("Response: ", JSON.stringify(res));
+                console.log("Event: ", JSON.stringify(myCtx.event));
+                console.log("Response: ", JSON.stringify(myCtx.res));
             }
             if ( process.env.debug >= 2 )
-                console.log("Context: ", JSON.stringify(ctx));
+                console.log("Context: ", JSON.stringify(myCtx.ctx));
             if ( process.env.debug >= 3 )
                 console.log("Env: ", JSON.stringify(process.env));
         }
-        function clean(ctx) { delete ctx.$$custom;}
     }
 
 })();
