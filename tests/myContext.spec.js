@@ -4,7 +4,7 @@
 const assert = require('assert');
 const sinon = require('sinon');
 
-xdescribe('myContext.js', () => {
+describe('myContext.js', () => {
     let MyContext = require('../modules/myContext');
     let myContext;
 

@@ -1,4 +1,4 @@
-/* global exports, require, process */
+/* global exports, require */
 'use strict';
 
 const MyContext = require('./modules/myContext');

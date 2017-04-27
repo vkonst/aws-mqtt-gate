@@ -68,11 +68,14 @@ describe('kmsDecryptor.js', ()=>{
     });
 
     function mockKmsConstructor() {
+        // decrypt(params: KMS.Types.DecryptRequest, callback?: (err: AWSError, data: KMS.Types.DecryptResponse) => void)
+        // interface DecryptRequest { CiphertextBlob: CiphertextType; EncryptionContext?: EncryptionContextType; GrantTokens?: GrantTokenList; }
+        // interface DecryptResponse { KeyId?: KeyIdType; Plaintext?: PlaintextType; }
         return {
             decrypt: (data, cb) => {
                 let dataToEncrypt = data.CiphertextBlob.toString('base64');
                 if ( dataToEncrypt === encryptedData ) {
-                    cb(null, decryptedData);
+                    cb(null, { Plaintext: decryptedData});
                 } else {
                     cb('test error');
                 }
@@ -82,6 +85,6 @@ describe('kmsDecryptor.js', ()=>{
 
     function requireUncached(module){
         delete require.cache[require.resolve(module)];
-        return require(module)
+        return require(module);
     }
 });

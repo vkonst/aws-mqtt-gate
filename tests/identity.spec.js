@@ -3,7 +3,7 @@
 
 const assert = require('assert');
 
-xdescribe('identity.js', () => {
+describe('identity.js', () => {
     let Identity = require('../modules/identity');
 
     describe('"Identity" module', function() {
@@ -59,8 +59,7 @@ xdescribe('identity.js', () => {
         });
 
         it('shall return true for pre-defined getConfig and sourceIp 149.154.164.32 in event.requestContext.identity', function() {
-            let event = createEvent({ipAddress: "149.154.164.32"});
-            assert.equal(identity.verify(event), true);
+            assert.equal(identity.verify(createEvent({ipAddress: "149.154.164.32"})), true);
         });
 
         it('shall return true for pre-defined getConfig and sourceIp 149.154.164.0 in event.requestContext.identity', function() {
