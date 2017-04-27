@@ -6,8 +6,8 @@ May be used as a "general purpose" getway from HTTP(s) to MQTT.
 
 Use cases:
 
-- Telegram Bot running on a cheep OpenWRT router with GSM connection
-- server running behind NAT with slow Internet connection without real IP that listens to commands via MQTT
+- Telegram Bot running on a cheep OpenWRT router with poor GSM connection
+- Server running behind NAT with slow Internet connection without real IP that listens to commands via MQTT
 
 How it works:
 
@@ -18,6 +18,14 @@ The Lambda:
 - takes the whole content of the request body as the payload for the MQTT message
 - publish the payload to the AWS IoT broker under the topic specified in config.js
 
+Authorization of requests:
+
+In addition to AWS built-in authorization options (may be difficult to use with external services) this script supports
+- authorization by IP-address of the requesting host
+- HMAC code in the request params or body
+- User/password in the URL
+(refer to "authRules" section in config.js)
+
 How to use:
 
 0. Prerequisites:
@@ -27,11 +35,3 @@ How to use:
 1. Setup HTTP(s) API, register a "thing" with AWS IoT (create and download certificates for the "thing")
 2. Update config.js with your settings, upload certificate (if needed)
 3. Deploy to AWS Lambda ('npm run-script deploy' may be helpful)
-
-Authorization of requests:
-
-In addition to AWS built-in authorization options (may be difficult to use with external services) this script supports -
-- authorization by IP-address of the requesting host
-- HMAC code
-- URL-encoded user/passw
-(refer to "authRules" section in config.js)
