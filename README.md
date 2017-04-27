@@ -5,10 +5,12 @@ Initially aimed to route messages from a Telegram messenger to a Telegram bot vi
 May be used as a "general purpose" getway from HTTP(s) to MQTT.
 
 Use cases:
+
 - Telegram Bot running on a cheep OpenWRT router with GSM connection
 - server running behind NAT without real IP that listens to a commands via MQTT
 
 How it works:
+
 API URL exposed via AWS API gets registered as the Telegram "Webbhook" for your bot.
 On a message received, the Telegram sends the requests to the "webhook" that AWS routes to this Lambda function.
 The Lambda:
@@ -17,6 +19,7 @@ The Lambda:
 - publish the payload to the AWS IoT broker under the topic specified in config.js
 
 How to use:
+
 0. Prerequisites:
 - sign up to AWS Lambda, AWS API, AWS IoT
 - install node.js (optionally: claudia.js)
