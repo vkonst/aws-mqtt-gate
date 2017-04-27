@@ -1,0 +1,50 @@
+{
+    "resource": "/lambda-to-iot",
+    "path": "/lambda-to-iot",
+    "httpMethod": "POST",
+    "headers": {
+    "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en-US,en;q=0.5",
+        "CloudFront-Forwarded-Proto": "https",
+        "CloudFront-Is-Desktop-Viewer": "true",
+        "CloudFront-Is-Mobile-Viewer": "false",
+        "CloudFront-Is-SmartTV-Viewer": "false",
+        "CloudFront-Is-Tablet-Viewer": "false",
+        "CloudFront-Viewer-Country": "RU",
+        "content-type": "text/plain;charset=UTF-8",
+        "Host": "some.host.at.amazonaws.com",
+        "X-Forwarded-For": "192.198.0.1",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+},
+    "queryStringParameters": null,
+    "pathParameters": null,
+    "stageVariables": {
+    "telegramAccessToken": "some.sevret.token",
+        "lambdaVersion": "latest"
+},
+    "requestContext": {
+    "accountId": "000000000000",
+        "stage": "latest",
+        "requestId": "aaaaaaaa-bbbb-cccc-dddd-ffffffffffff",
+        "identity": {
+        "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "apiKey": null,
+            "sourceIp": "149.154.164.32",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "user": null
+    },
+    "resourcePath": "/lambda-to-ios",
+        "httpMethod": "POST",
+        "apiId": "xxxxxxxxxx"
+},
+    "body": "{\"from\":\"tester\", \"try\":33}",
+    "isBase64Encoded": false
+}
