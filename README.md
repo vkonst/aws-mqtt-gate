@@ -5,8 +5,8 @@ Initially aimed to route messages from a Telegram messenger to a Telegram bot vi
 May be used as a "general purpose" getway from HTTP(s) to MQTT.
 
 Use cases:
-A Telegram Bot running on a cheep OpenWRT router with GSM connection.
-A server running behind NAT without real IP listening to a commands via MQTT.
+- Telegram Bot running on a cheep OpenWRT router with GSM connection
+- server running behind NAT without real IP that listens to a commands via MQTT
 
 How it works:
 API URL exposed via AWS API gets registered as the Telegram "Webbhook" for your bot.
