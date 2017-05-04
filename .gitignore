@@ -1,10 +1,7 @@
 .idea/
 node_modules/
 certs/
-.env
-context.json
-deploy.env
-event.json
-event_sources.json
-telegram.webhook.xhr.sample
+tests/assets/
+tests/assets/private/
 testConnect.js
+config2.js

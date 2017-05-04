@@ -1,21 +1,21 @@
 /* global exports, require */
 'use strict';
 
-const MyContext = require('./modules/myContext');
+const ThenContext = require('then-lambda');
 const Identity = require('./modules/identity');
 const Publisher = require('./modules/mqttPublisher');
 const configure = require('./modules/configure');
 const getConfig = require('./config');
 
 exports.handler = (event, context, callback) => {
-    let myCtx = new MyContext(event, context, callback);
-    myCtx.promisify()
+    let thenCtx = new ThenContext(event, context, callback);
+    thenCtx.promisify()
         .then(processConfig)
         .then(verifySender)
         .then(prepareMsg)
         .then(publishMsg)
-        .then(myCtx.finalize)
-        .catch(myCtx.finalize);
+        .then(thenCtx.finalize)
+        .catch(thenCtx.finalize);
 };
 
 function processConfig(myCtx) {

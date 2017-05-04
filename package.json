@@ -8,7 +8,6 @@
   "files": [
     "lambda-to-iot.js",
     "config.js",
-    "modules/myContext.js",
     "modules/configure.js",
     "modules/identity.js",
     "modules/kmsDecryptor.js",
@@ -17,18 +16,19 @@
     "certs/root-CA.crt"
   ],
   "dependencies": {
-    "ip": "^1.1.5"
+    "crypto": "0.0.3",
+    "ip": "^1.1.5",
+    "then-lambda": "0.0.1"
   },
   "optionalDependencies": {
     "aws-iot-device-sdk": "^1.0.14",
     "aws-sdk": "^2.28.0"
   },
   "devDependencies": {
-    "sinon": "^2.1.0",
-    "crypto": "0.0.3"
+    "sinon": "^2.1.0"
   },
   "scripts": {
-    "test" : "mocha --ui bdd --reporter dot tests/*.spec.js",
+    "test": "mocha --ui bdd --reporter dot tests/*.spec.js",
     "deploy": "export AWS_PROFILE=claudia; claudia update lambda-to-iot -no-optional-dependencies",
     "test-aws": "claudia test-lambda lambda-to-iot --event tests/test.event.json"
   }
